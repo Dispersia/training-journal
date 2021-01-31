@@ -1,0 +1,16 @@
+[package]
+authors = ["Dispersia <dispersias@gmail.com>"]
+edition = "2018"
+name = "api"
+version = "0.1.0"
+
+[dependencies]
+http-body = "0.4"
+hyper = "0.14"
+futures = "0.3"
+tower = "0.4"
+warp = "0.3"
+log = "0.4"
+
+grpc_contracts = {path = "../grpc_contracts"}
+shared = {path = "../shared"}

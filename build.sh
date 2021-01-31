@@ -1,0 +1,1 @@
+protoc --dart_out=grpc:app/repositories/lib/grpc/generated -Iprotos protos/helloworld.proto

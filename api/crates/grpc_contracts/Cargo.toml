@@ -1,0 +1,12 @@
+[package]
+name = "grpc_contracts"
+version = "0.1.0"
+authors = ["Dispersia <dispersias@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+tonic = { git = "https://github.com/hyperium/tonic" }
+prost = "0.7"
+
+[build-dependencies]
+tonic-build = { git = "https://github.com/hyperium/tonic" }
