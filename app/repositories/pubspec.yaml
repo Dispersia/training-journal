@@ -12,5 +12,8 @@ environment:
 dependencies:
   protobuf: ^1.0.1
   grpc: ^2.9.0
+  # protobuf: ^2.0.0-nullsafety.1
+  # grpc:
+  #   git: git://github.com/grpc/grpc-dart.git
 
 dev_dependencies:

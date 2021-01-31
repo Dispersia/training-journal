@@ -6,7 +6,7 @@ use std::{
 };
 
 use futures::future::{self, Either, TryFutureExt};
-use grpc_contracts::create_grpc_server;
+use grpc::create_grpc_server;
 use hyper::{service::make_service_fn, HeaderMap, Server, Version};
 use shared::Settings;
 use tower::Service;

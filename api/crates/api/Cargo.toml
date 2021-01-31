@@ -12,5 +12,5 @@ tower = "0.4"
 warp = "0.3"
 log = "0.4"
 
-grpc_contracts = {path = "../grpc_contracts"}
+grpc = {path = "../grpc"}
 shared = {path = "../shared"}

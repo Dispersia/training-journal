@@ -33,9 +33,7 @@ class _MyAppState extends State<MyApp> {
                 return CircularProgressIndicator();
               }
 
-              var data = snapshot.data;
-
-              return Text('GRPC: $data');
+              return Text('GRPC: ${snapshot.data}');
             },
           ),
         ),
