@@ -27,7 +27,7 @@ impl Greeter for MyGreeter {
             Some(t) => {
                 match auth::validate_token(&t.to_str().unwrap()).await {
                     Ok(token_valid) if !token_valid => return Err(Status::unauthenticated("Not authorized")),
-                    Err(auth_error) => return Err(Status::unauthenticated("failed parsing authentication methods")),
+                    Err(_) => return Err(Status::unauthenticated("failed parsing authentication methods")),
                     _ => {}
                 }
             }

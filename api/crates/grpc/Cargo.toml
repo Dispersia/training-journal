@@ -6,6 +6,7 @@ version = "0.1.0"
 
 [dependencies]
 biscuit = "0.5"
+once_cell = "1.5"
 prost = "0.7"
 reqwest = {version = "0.11", features = ["json"]}
 serde = {version = "1.0", features = ["derive"]}

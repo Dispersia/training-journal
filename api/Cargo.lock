@@ -464,6 +464,7 @@ name = "grpc"
 version = "0.1.0"
 dependencies = [
  "biscuit",
+ "once_cell",
  "prost",
  "reqwest",
  "serde",

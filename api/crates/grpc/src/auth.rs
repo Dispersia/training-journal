@@ -1,6 +1,7 @@
 use biscuit::jwa::*;
 use biscuit::jwk::*;
 use biscuit::*;
+use once_cell::sync::OnceCell;
 use serde::{Deserialize, Serialize};
 use thiserror::Error;
 
@@ -14,25 +15,28 @@ pub async fn validate_token(token: &str) -> Result<bool, AuthError> {
     let jwks = fetch_jwks(authority).await?;
 
     let token_data = JWT::<biscuit::Empty, biscuit::Empty>::new_encoded(&token);
-    let token_data = token_data.decode_with_jwks(&jwks, Some(SignatureAlgorithm::RS256));
-
-    println!("{:#?}", token_data);
+    let token_data = token_data.decode_with_jwks(jwks, Some(SignatureAlgorithm::RS256));
 
     Ok(token_data.is_ok())
 }
 
-async fn fetch_jwks(uri: &str) -> Result<JWKSet<biscuit::Empty>, AuthError> {
+static JWKS: OnceCell<JWKSet<biscuit::Empty>> = OnceCell::new();
+
+async fn fetch_jwks(uri: &str) -> Result<&JWKSet<biscuit::Empty>, AuthError> {
+    if let Some(jwks) = JWKS.get() {
+        return Ok(jwks);
+    }
+
     let res = reqwest::get(uri).await?;
     let val = res.json::<JWKSet<biscuit::Empty>>().await?;
-    return Ok(val);
+
+    JWKS.get_or_init(|| val);
+
+    return Ok(JWKS.get().unwrap());
 }
 
 #[derive(Debug, Error)]
 pub enum AuthError {
-    #[error("internal server error")]
-    InternalServerError,
-    #[error("bad request `{0}`")]
-    BadRequest(String),
     #[error("jwks fetch error")]
     JWKSFetchError(#[from] reqwest::Error),
 }
