@@ -28,6 +28,8 @@ impl Greeter for MyGreeter {
         &self,
         request: Request<HelloRequest>,
     ) -> Result<Response<HelloReply>, Status> {
+        println!("{:#?}", request);
+        
         match request.metadata().get("authorization") {
             Some(t) => {
                 match auth::validate_token(&t.to_str().unwrap()).await {

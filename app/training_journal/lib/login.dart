@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter_appauth/flutter_appauth.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+
+import 'package:repositories/repositories.dart';
 
 final FlutterAppAuth appAuth = FlutterAppAuth();
 final FlutterSecureStorage secureStorage = const FlutterSecureStorage();
@@ -15,14 +16,17 @@ const AUTH0_REDIRECT_URI = 'io.training-journal://login-callback';
 const AUTH0_ISSUER = 'https://$AUTH0_DOMAIN';
 
 class Profile extends StatelessWidget {
+  final Client _client = Client();
   final logoutAction;
   final String name;
   final String picture;
+  final String bearerToken;
 
-  Profile(this.logoutAction, this.name, this.picture);
+  Profile(this.logoutAction, this.name, this.picture, this.bearerToken);
 
   @override
   Widget build(BuildContext context) {
+    print(bearerToken);
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -43,6 +47,17 @@ class Profile extends StatelessWidget {
         ),
         SizedBox(height: 24.0),
         Text('Name: $name'),
+        SizedBox(height: 48.0),
+        FutureBuilder<String>(
+          future: _client.sendMessage('World!', bearerToken),
+          builder: (context, snapshot) {
+            if (!snapshot.hasData) {
+              return CircularProgressIndicator();
+            }
+
+            return Text('GRPC: ${snapshot.data}');
+          },
+        ),
         SizedBox(height: 48.0),
         ElevatedButton(
           onPressed: () {
@@ -89,6 +104,7 @@ class _LoginHomeState extends State<LoginHome> {
   String errorMessage;
   String name;
   String picture;
+  String token;
 
   @override
   Widget build(BuildContext context) {
@@ -102,7 +118,7 @@ class _LoginHomeState extends State<LoginHome> {
           child: isBusy
               ? CircularProgressIndicator()
               : isLoggedIn
-                  ? Profile(logoutAction, name, picture)
+                  ? Profile(logoutAction, name, picture, token)
                   : Login(loginAction, errorMessage),
         ),
       ),
@@ -158,6 +174,7 @@ class _LoginHomeState extends State<LoginHome> {
       setState(() {
         isBusy = false;
         isLoggedIn = true;
+        token = result.idToken;
         name = idToken['name'];
         picture = profile['picture'];
       });
@@ -210,6 +227,7 @@ class _LoginHomeState extends State<LoginHome> {
       setState(() {
         isBusy = false;
         isLoggedIn = true;
+        token = response.idToken;
         name = idToken['name'];
         picture = profile['picture'];
       });
