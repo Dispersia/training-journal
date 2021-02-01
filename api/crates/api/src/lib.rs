@@ -15,7 +15,6 @@ use warp::Filter;
 type Error = Box<dyn std::error::Error + Send + Sync + 'static>;
 
 pub async fn start_server(settings: Settings) -> Result<(), Box<dyn std::error::Error>> {
-    let grpc_server = create_grpc_server();
 
     log::info!("Starting server on: {}:{}", settings.address, settings.port);
 
@@ -26,7 +25,7 @@ pub async fn start_server(settings: Settings) -> Result<(), Box<dyn std::error::
         settings.port,
     ))
     .serve(make_service_fn(move |_| {
-        let mut grpc_server = grpc_server.clone();
+        let mut grpc_server = create_grpc_server();
 
         future::ok::<_, Infallible>(tower::service_fn(move |req: hyper::Request<hyper::Body>| {
             match req.version() {

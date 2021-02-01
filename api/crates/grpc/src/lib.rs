@@ -1,6 +1,6 @@
 mod auth;
 
-use tonic::{Request, Response, Status};
+use tonic::{Request, Response, Status, transport::{Server, server::{RouterService, Unimplemented}}};
 
 use hello_world::greeter_server::{Greeter, GreeterServer};
 use hello_world::{HelloReply, HelloRequest};
@@ -9,9 +9,14 @@ mod hello_world {
     tonic::include_proto!("helloworld");
 }
 
-pub fn create_grpc_server() -> GreeterServer<MyGreeter> {
-    let greeter = MyGreeter::default();
-    GreeterServer::new(greeter)
+type Service = RouterService<GreeterServer<MyGreeter>, Unimplemented>;
+
+pub fn create_grpc_server() -> Service {
+    let greeter_service = GreeterServer::new(MyGreeter::default());
+
+    Server::builder()
+        .add_service(greeter_service)
+        .into_service()
 }
 
 #[derive(Default, Debug)]

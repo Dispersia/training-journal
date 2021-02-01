@@ -5,12 +5,15 @@ name = "training_journal"
 version = "0.1.0"
 
 [dependencies]
-tokio = { version = "1.1", features = [ "macros", "rt-multi-thread", "time", "net" ] }
 pretty_env_logger = "0.4"
+tokio = {version = "1.1", features = ["macros", "rt-multi-thread", "time", "net"]}
 
 api = {path = "crates/api"}
 shared = {path = "crates/shared"}
 
+[profile.dev]
+debug = false
+
 [profile.release]
-lto = 'thin'
 codegen-units = 1
+lto = 'thin'
