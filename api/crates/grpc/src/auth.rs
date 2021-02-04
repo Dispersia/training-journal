@@ -4,13 +4,31 @@ use biscuit::*;
 use once_cell::sync::OnceCell;
 use serde::{Deserialize, Serialize};
 use thiserror::Error;
+use tonic::{Request, Status};
 
 #[derive(Debug, Serialize, Deserialize)]
 struct Claims {
     exp: usize,
 }
 
-pub async fn validate_token(token: &str) -> Result<bool, AuthError> {
+pub async fn validate_token<T>(request: &Request<T>) -> Result<(), Status> {
+    match request.metadata().get("authorization") {
+        Some(t) => match verify_jwks(&t.to_str().unwrap()).await {
+            Ok(token_valid) if !token_valid => {
+                return Err(Status::unauthenticated("not authorized"));
+            }
+            Err(_) => {
+                return Err(Status::unauthenticated(
+                    "failed parsing authentication methods",
+                ));
+            }
+            _ => Ok(())
+        },
+        None => return Err(Status::unauthenticated("missing authorization header")),
+    }
+}
+
+async fn verify_jwks(token: &str) -> Result<bool, AuthError> {
     let authority = "https://training-journal.auth0.com/.well-known/jwks.json";
     let jwks = fetch_jwks(authority).await?;
 

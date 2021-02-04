@@ -28,18 +28,7 @@ impl Greeter for MyGreeter {
         &self,
         request: Request<HelloRequest>,
     ) -> Result<Response<HelloReply>, Status> {
-        println!("{:#?}", request);
-        
-        match request.metadata().get("authorization") {
-            Some(t) => {
-                match auth::validate_token(&t.to_str().unwrap()).await {
-                    Ok(token_valid) if !token_valid => return Err(Status::unauthenticated("Not authorized")),
-                    Err(_) => return Err(Status::unauthenticated("failed parsing authentication methods")),
-                    _ => {}
-                }
-            }
-            None => return Err(Status::unauthenticated("missing authorization header")),
-        };
+        auth::validate_token(&request).await?;
 
         let reply = hello_world::HelloReply {
             message: format!("New server, who dis? Name: {}", request.into_inner().name),
