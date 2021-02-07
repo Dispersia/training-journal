@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:blocs/blocs.dart';
 import 'package:repositories/repositories.dart';
-import 'package:training_journal/login.dart';
+import 'package:training_journal/app.dart';
 
-void main() => runApp(LoginHome());
+void main() {
+  return runApp(
+    App(
+      authRepository: AuthRepository(),
+    ),
+  );
+}

@@ -11,17 +11,16 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_bloc: ^6.1.1
   cupertino_icons: ^1.0.2
-  flutter_appauth: ^0.9.1
-  flutter_secure_storage: ^3.3.3
-
-dev_dependencies:
-  flutter_test:
-    sdk: flutter
   blocs:
     path: ../blocs
   repositories:
     path: ../repositories
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
 
 flutter:
   uses-material-design: true
