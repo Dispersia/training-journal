@@ -1,9 +1,9 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:training_journal/src/router/router.gr.dart';
 
 class Home extends StatelessWidget {
-  static Route route() {
-    return MaterialPageRoute(builder: (_) => Home());
-  }
+  const Home({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,10 +17,8 @@ class Home extends StatelessWidget {
             child: ListTile(
               title: const Text('Challenges'),
               onTap: () {
-                Navigator.pushNamed(
-                  context,
-                  'challenges',
-                );
+                ExtendedNavigator.of(context)
+                    .pushAndRemoveUntil(Routes.home, (route) => false);
               },
             ),
           ),

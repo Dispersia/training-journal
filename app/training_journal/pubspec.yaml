@@ -12,13 +12,16 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_bloc: ^6.1.1
-  cupertino_icons: ^1.0.2
+  auto_route: ^0.6.9
+
   blocs:
     path: ../blocs
   repositories:
     path: ../repositories
 
 dev_dependencies:
+  auto_route_generator: ^0.6.9
+  build_runner: ^1.11.1
   flutter_test:
     sdk: flutter
 

@@ -1,9 +1,10 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:blocs/blocs.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:repositories/repositories.dart';
-
+import 'package:training_journal/src/router/router.gr.dart';
 import 'package:training_journal/src/src.dart';
 
 class App extends StatelessWidget {
@@ -30,39 +31,39 @@ class App extends StatelessWidget {
 }
 
 class AppView extends StatefulWidget {
+  AppView({Key key}) : super(key: key);
+
   @override
   _AppViewState createState() => _AppViewState();
 }
 
 class _AppViewState extends State<AppView> {
-  final _navigatorKey = GlobalKey<NavigatorState>();
-
-  NavigatorState get _navigator => _navigatorKey.currentState;
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      navigatorKey: _navigatorKey,
-      builder: (context, child) {
-        return BlocListener<AuthenticationBloc, AuthenticationState>(
-          listener: (context, state) {
-            if (state is AuthenticationUnauthenticated ||
-                state is AuthenticationLogInFailure) {
-              _navigator.pushAndRemoveUntil<void>(
-                LoginHome.route(),
-                (route) => false,
-              );
-            } else if (state is AuthenticationAuthenticated) {
-              _navigator.pushAndRemoveUntil<void>(
-                Home.route(),
-                (route) => false,
-              );
-            }
-          },
-          child: child,
-        );
-      },
-      onGenerateRoute: (_) => SplashPage.route(),
+      builder: ExtendedNavigator.builder(
+        initialRoute: Routes.splashPage,
+        router: TrainingJournalRouter(),
+        builder: (context, navigator) {
+          return BlocListener<AuthenticationBloc, AuthenticationState>(
+            listener: (context, state) {
+              if (state is AuthenticationUnauthenticated ||
+                  state is AuthenticationLogInFailure) {
+                ExtendedNavigator.root.pushAndRemoveUntil(
+                  Routes.loginHome,
+                  (route) => false,
+                );
+              } else if (state is AuthenticationAuthenticated) {
+                ExtendedNavigator.root.pushAndRemoveUntil(
+                  Routes.home,
+                  (route) => false,
+                );
+              }
+            },
+            child: navigator,
+          );
+        },
+      ),
     );
   }
 
