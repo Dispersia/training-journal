@@ -2,7 +2,6 @@ import 'package:blocs/blocs.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:repositories/repositories.dart';
 
 class LoginHome extends StatelessWidget {
   static Route route() {

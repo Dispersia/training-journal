@@ -45,8 +45,10 @@ class AuthenticationBloc
   Future<AuthenticationState> _mapAuthenticationLoggedInToState(
     AuthenticationLoggedIn event,
   ) async {
-    await secureStorage.write(
-        key: 'refresh_token', value: event.token.refreshToken);
+    if (event.token.refreshToken != null) {
+      await secureStorage.write(
+          key: 'refresh_token', value: event.token.refreshToken);
+    }
     return AuthenticationAuthenticated(event.token);
   }
 

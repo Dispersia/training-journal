@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:repositories/repositories.dart';
-import 'package:training_journal/app.dart';
+import 'package:training_journal/src/src.dart';
 
 void main() {
   return runApp(

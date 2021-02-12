@@ -4,9 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:repositories/repositories.dart';
 
-import 'home.dart';
-import 'login.dart';
-import 'splash.dart';
+import 'package:training_journal/src/src.dart';
 
 class App extends StatelessWidget {
   final AuthRepository authRepository;
