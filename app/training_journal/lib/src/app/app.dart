@@ -5,7 +5,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:repositories/repositories.dart';
 import 'package:training_journal/src/router/router.gr.dart';
-import 'package:training_journal/src/src.dart';
 
 class App extends StatelessWidget {
   final AuthRepository authRepository;
@@ -50,12 +49,12 @@ class _AppViewState extends State<AppView> {
               if (state is AuthenticationUnauthenticated ||
                   state is AuthenticationLogInFailure) {
                 ExtendedNavigator.root.pushAndRemoveUntil(
-                  Routes.loginHome,
+                  Routes.loginPage,
                   (route) => false,
                 );
               } else if (state is AuthenticationAuthenticated) {
                 ExtendedNavigator.root.pushAndRemoveUntil(
-                  Routes.home,
+                  Routes.homePage,
                   (route) => false,
                 );
               }

@@ -1,11 +1,12 @@
 import 'package:auto_route/auto_route_annotations.dart';
-import 'package:training_journal/src/src.dart';
+import 'package:training_journal/src/views.dart';
 
 @AdaptiveAutoRouter(
   routes: <AutoRoute>[
     MaterialRoute(page: SplashPage, initial: true),
-    MaterialRoute(page: Home),
-    MaterialRoute(page: LoginHome)
+    MaterialRoute(page: HomePage),
+    MaterialRoute(page: LoginPage),
+    MaterialRoute(page: ChallengesPage)
   ],
 )
 class $TrainingJournalRouter {}

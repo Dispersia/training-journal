@@ -9,16 +9,18 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 
-import '../src.dart';
+import '../views.dart';
 
 class Routes {
   static const String splashPage = '/';
-  static const String home = '/Home';
-  static const String loginHome = '/login-home';
+  static const String homePage = '/home-page';
+  static const String loginPage = '/login-page';
+  static const String challengesPage = '/challenges-page';
   static const all = <String>{
     splashPage,
-    home,
-    loginHome,
+    homePage,
+    loginPage,
+    challengesPage,
   };
 }
 
@@ -27,8 +29,9 @@ class TrainingJournalRouter extends RouterBase {
   List<RouteDef> get routes => _routes;
   final _routes = <RouteDef>[
     RouteDef(Routes.splashPage, page: SplashPage),
-    RouteDef(Routes.home, page: Home),
-    RouteDef(Routes.loginHome, page: LoginHome),
+    RouteDef(Routes.homePage, page: HomePage),
+    RouteDef(Routes.loginPage, page: LoginPage),
+    RouteDef(Routes.challengesPage, page: ChallengesPage),
   ];
   @override
   Map<Type, AutoRouteFactory> get pagesMap => _pagesMap;
@@ -39,15 +42,21 @@ class TrainingJournalRouter extends RouterBase {
         settings: data,
       );
     },
-    Home: (data) {
+    HomePage: (data) {
       return MaterialPageRoute<dynamic>(
-        builder: (context) => const Home(),
+        builder: (context) => const HomePage(),
         settings: data,
       );
     },
-    LoginHome: (data) {
+    LoginPage: (data) {
       return MaterialPageRoute<dynamic>(
-        builder: (context) => const LoginHome(),
+        builder: (context) => const LoginPage(),
+        settings: data,
+      );
+    },
+    ChallengesPage: (data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => ChallengesPage(),
         settings: data,
       );
     },
