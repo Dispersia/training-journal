@@ -16,11 +16,13 @@ class Routes {
   static const String homePage = '/home-page';
   static const String loginPage = '/login-page';
   static const String challengesPage = '/challenges-page';
+  static const String nineCPage = '/nine-cPage';
   static const all = <String>{
     splashPage,
     homePage,
     loginPage,
     challengesPage,
+    nineCPage,
   };
 }
 
@@ -32,6 +34,7 @@ class TrainingJournalRouter extends RouterBase {
     RouteDef(Routes.homePage, page: HomePage),
     RouteDef(Routes.loginPage, page: LoginPage),
     RouteDef(Routes.challengesPage, page: ChallengesPage),
+    RouteDef(Routes.nineCPage, page: NineCPage),
   ];
   @override
   Map<Type, AutoRouteFactory> get pagesMap => _pagesMap;
@@ -57,6 +60,12 @@ class TrainingJournalRouter extends RouterBase {
     ChallengesPage: (data) {
       return MaterialPageRoute<dynamic>(
         builder: (context) => ChallengesPage(),
+        settings: data,
+      );
+    },
+    NineCPage: (data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => NineCPage(),
         settings: data,
       );
     },

@@ -19,8 +19,7 @@ class HomePage extends StatelessWidget {
             child: ListTile(
               title: const Text('Challenges'),
               onTap: () {
-                ExtendedNavigator.of(context)
-                    .pushAndRemoveUntil(Routes.homePage, (route) => false);
+                ExtendedNavigator.of(context).push(Routes.challengesPage);
               },
             ),
           ),
