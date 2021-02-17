@@ -1,9 +1,11 @@
+import 'package:blocs/blocs.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:training_journal/src/challenges/9c/core.dart';
 import 'package:training_journal/src/challenges/9c/deadhang.dart';
-import 'package:training_journal/src/challenges/9c/fingerboard.dart';
-import 'package:training_journal/src/challenges/9c/pullup.dart';
+
+import 'weighted.dart';
 
 class NineCPage extends StatefulWidget {
   @override
@@ -14,11 +16,11 @@ class _NineCPageState extends State<NineCPage> {
   List<Exercise> exercises = <Exercise>[
     Exercise(
       'Max Fingerboard Weight',
-      Fingerboard(),
+      Weighted('Hold on 20mm edge for 5 seconds'),
     ),
     Exercise(
       'Max Pullup',
-      Pullup(),
+      Weighted('Forward grip pullup, chin over bar'),
     ),
     Exercise(
       'Core',
@@ -38,62 +40,65 @@ class _NineCPageState extends State<NineCPage> {
       appBar: AppBar(
         title: const Text('9C Test'),
       ),
-      body: ListView(
-        children: [
-          ExpansionPanelList(
-            expansionCallback: (i, expanded) {
-              setState(() {
-                exercises[i].isExpanded = !exercises[i].isExpanded;
-              });
-            },
-            children: exercises.map(
-              (item) {
-                return ExpansionPanel(
-                  headerBuilder: (context, expanded) {
-                    return ListTile(
-                      title: Text(
-                        item.header,
-                        textAlign: TextAlign.left,
-                      ),
-                      trailing: Container(
-                        width: 50,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            Expanded(
-                              flex: 3,
-                              child: TextField(
-                                textAlign: TextAlign.center,
-                                decoration: InputDecoration(
-                                  hintText: 'Score',
-                                ),
-                                keyboardType: TextInputType.number,
-                                inputFormatters: [
-                                  FilteringTextInputFormatter.digitsOnly
-                                ],
-                                onChanged: (value) {
-                                  setState(() {
-                                    item.score = int.parse(value);
-                                  });
-                                },
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    );
-                  },
-                  isExpanded: item.isExpanded,
-                  body: item.body,
-                );
+      body: BlocProvider<WeightBloc>(
+        create: (context) => WeightBloc(),
+        child: ListView(
+          children: [
+            ExpansionPanelList(
+              expansionCallback: (i, expanded) {
+                setState(() {
+                  exercises[i].isExpanded = !exercises[i].isExpanded;
+                });
               },
-            ).toList(),
-          ),
-          Container(
-            padding: EdgeInsets.all(20),
-            child: Text('Final Score: $score - ${finalScore(score)}'),
-          )
-        ],
+              children: exercises.map(
+                (item) {
+                  return ExpansionPanel(
+                    headerBuilder: (context, expanded) {
+                      return ListTile(
+                        title: Text(
+                          item.header,
+                          textAlign: TextAlign.left,
+                        ),
+                        trailing: Container(
+                          width: 50,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              Expanded(
+                                flex: 3,
+                                child: TextField(
+                                  textAlign: TextAlign.center,
+                                  decoration: InputDecoration(
+                                    hintText: 'Score',
+                                  ),
+                                  keyboardType: TextInputType.number,
+                                  inputFormatters: [
+                                    FilteringTextInputFormatter.digitsOnly
+                                  ],
+                                  onChanged: (value) {
+                                    setState(() {
+                                      item.score = int.parse(value);
+                                    });
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                    isExpanded: item.isExpanded,
+                    body: item.body,
+                  );
+                },
+              ).toList(),
+            ),
+            Container(
+              padding: EdgeInsets.all(20),
+              child: Text('Final Score: $score - ${finalScore(score)}'),
+            )
+          ],
+        ),
       ),
     );
   }
