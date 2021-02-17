@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:training_journal/src/challenges/9c/tile.dart';
 
 class Fingerboard extends StatefulWidget {
   @override
@@ -29,44 +30,21 @@ class _FingerboardState extends State<Fingerboard> {
               });
             },
           ),
-          if (weight > 0) ...[
-            ListTile(
-              title: const Text('10'),
-              trailing: Text('${weight * 1.20}'),
+          if (weight > 0)
+            ...getTiles(
+              [
+                Tile(10, '${weight * 1.20}'),
+                Tile(9, '${weight * 1.0}'),
+                Tile(8, '${weight * .8}'),
+                Tile(7, '${weight * .6}'),
+                Tile(6, '${weight * .5}'),
+                Tile(5, '${weight * .4}'),
+                Tile(4, '${weight * .3}'),
+                Tile(3, '${weight * .2}'),
+                Tile(2, '${weight * .1}'),
+                Tile(1, '0'),
+              ],
             ),
-            ListTile(
-              title: const Text('9'),
-              trailing: Text('${weight * 1.0}'),
-            ),
-            ListTile(
-              title: const Text('8'),
-              trailing: Text('${weight * .8}'),
-            ),
-            ListTile(
-              title: const Text('7'),
-              trailing: Text('${weight * .6}'),
-            ),
-            ListTile(
-              title: const Text('6'),
-              trailing: Text('${weight * .5}'),
-            ),
-            ListTile(
-              title: const Text('5'),
-              trailing: Text('${weight * .4}'),
-            ),
-            ListTile(
-              title: const Text('4'),
-              trailing: Text('${weight * .3}'),
-            ),
-            ListTile(
-              title: const Text('3'),
-              trailing: Text('${weight * .2}'),
-            ),
-            ListTile(
-              title: const Text('2'),
-              trailing: Text('${weight * .1}'),
-            ),
-          ]
         ],
       ),
     );

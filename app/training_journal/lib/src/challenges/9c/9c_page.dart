@@ -33,6 +33,7 @@ class _NineCPageState extends State<NineCPage> {
   @override
   Widget build(BuildContext context) {
     int score = exercises.fold(0, (a, b) => a + b.score);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('9C Test'),
@@ -63,7 +64,7 @@ class _NineCPageState extends State<NineCPage> {
                               flex: 3,
                               child: TextField(
                                 textAlign: TextAlign.center,
-                                decoration: InputDecoration.collapsed(
+                                decoration: InputDecoration(
                                   hintText: 'Score',
                                 ),
                                 keyboardType: TextInputType.number,
@@ -170,7 +171,7 @@ String finalScore(int score) {
     case 11:
       return "7a+ (5.12a - v7)";
     case 10:
-      return "7a (5.11d -v6)";
+      return "7a (5.11d - v6)";
     case 9:
       return "7a (5.11d - v6)";
     case 8:

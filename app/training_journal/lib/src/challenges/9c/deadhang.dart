@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:training_journal/src/challenges/9c/tile.dart';
 
 class Deadhang extends StatelessWidget {
   @override
@@ -7,45 +8,19 @@ class Deadhang extends StatelessWidget {
       height: 400,
       child: ListView(
         children: [
-          ListTile(
-            title: const Text('10'),
-            trailing: const Text('6min'),
-          ),
-          ListTile(
-            title: const Text('9'),
-            trailing: const Text('5min'),
-          ),
-          ListTile(
-            title: const Text('8'),
-            trailing: const Text('4min'),
-          ),
-          ListTile(
-            title: const Text('7'),
-            trailing: const Text('3.5min'),
-          ),
-          ListTile(
-            title: const Text('6'),
-            trailing: const Text('3min'),
-          ),
-          ListTile(
-            title: const Text('5'),
-            trailing: const Text('2.5min'),
-          ),
-          ListTile(
-            title: const Text('4'),
-            trailing: const Text('2min'),
-          ),
-          ListTile(
-            title: const Text('3'),
-            trailing: const Text('1.5min'),
-          ),
-          ListTile(
-            title: const Text('2'),
-            trailing: const Text('1min'),
-          ),
-          ListTile(
-            title: const Text('1'),
-            trailing: const Text('30sec'),
+          ...getTiles(
+            [
+              Tile(10, '6min'),
+              Tile(9, '5min'),
+              Tile(8, '4min'),
+              Tile(7, '3.5min'),
+              Tile(6, '3min'),
+              Tile(5, '2.5min'),
+              Tile(4, '2min'),
+              Tile(3, '1.5min'),
+              Tile(2, '1min'),
+              Tile(1, '30sec'),
+            ],
           ),
         ],
       ),

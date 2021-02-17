@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:training_journal/src/challenges/9c/tile.dart';
 
 class Core extends StatelessWidget {
   @override
@@ -7,46 +8,20 @@ class Core extends StatelessWidget {
       height: 400,
       child: ListView(
         children: [
-          ListTile(
-            title: const Text('10'),
-            trailing: const Text('30sec Front Lever'),
-          ),
-          ListTile(
-            title: const Text('9'),
-            trailing: const Text('20sec Front Lever'),
-          ),
-          ListTile(
-            title: const Text('8'),
-            trailing: const Text('10sec Front Lever'),
-          ),
-          ListTile(
-            title: const Text('7'),
-            trailing: const Text('5sec Front Lever'),
-          ),
-          ListTile(
-            title: const Text('6'),
-            trailing: const Text('20sec L-sit'),
-          ),
-          ListTile(
-            title: const Text('5'),
-            trailing: const Text('15sec L-sit'),
-          ),
-          ListTile(
-            title: const Text('4'),
-            trailing: const Text('10sec L-sit'),
-          ),
-          ListTile(
-            title: const Text('3'),
-            trailing: const Text('30sec L-sit(bent knees)'),
-          ),
-          ListTile(
-            title: const Text('2'),
-            trailing: const Text('20sec L-sit(bent knees)'),
-          ),
-          ListTile(
-            title: const Text('1'),
-            trailing: const Text('10sec L-sit(bent knees)'),
-          ),
+          ...getTiles(
+            [
+              Tile(10, '30sec Front Lever'),
+              Tile(9, '20sec Front Lever'),
+              Tile(8, '10sec Front Lever'),
+              Tile(7, '5sec Front Lever'),
+              Tile(6, '20sec L-Sit'),
+              Tile(5, '15sec L-Sit'),
+              Tile(4, '10sec L-Sit'),
+              Tile(3, '30sec L-Sit (Bent Knees)'),
+              Tile(2, '20sec L-Sit (Bent Knees)'),
+              Tile(1, '10sec L-Sit (Bent Knees)'),
+            ],
+          )
         ],
       ),
     );
