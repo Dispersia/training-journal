@@ -1,17 +1,25 @@
-import org.jetbrains.compose.ExperimentalComposeLibrary
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsCompose)
+    alias(libs.plugins.ktlint)
+}
+
+ktlint {
+    filter {
+        exclude { element ->
+            element.file.path.contains("generated")
+        }
+    }
 }
 
 kotlin {
     androidTarget {
         compilations.all {
             kotlinOptions {
-                jvmTarget = "1.8"
+                jvmTarget = "21"
             }
         }
     }
@@ -32,17 +40,27 @@ kotlin {
     sourceSets {
         val desktopMain by getting
 
+        all {
+            languageSettings.optIn("kotlinx.cinterop.ExperimentalForeignApi")
+        }
         androidMain.dependencies {
             implementation(libs.compose.ui.tooling.preview)
             implementation(libs.androidx.activity.compose)
+            implementation(libs.koin.android)
         }
         commonMain.dependencies {
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.material)
             implementation(compose.ui)
-            @OptIn(ExperimentalComposeLibrary::class)
             implementation(compose.components.resources)
+            implementation(compose.components.uiToolingPreview)
+            implementation(libs.koin.core)
+            implementation(libs.koin.compose)
+            implementation(libs.voyager.join)
+            implementation(libs.voyager.navigator)
+            implementation(libs.voyager.screenmodel)
+            implementation(libs.voyager.bottom.sheet.navigator)
         }
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)
@@ -76,8 +94,8 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
     }
     dependencies {
         debugImplementation(libs.compose.ui.tooling)
